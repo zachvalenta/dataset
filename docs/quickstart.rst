@@ -84,7 +84,7 @@ explicitly::
     try:
         db['user'].insert(dict(name='John Doe', age=46, country='China'))
         db.commit()
-    except:
+    except Exception:
         db.rollback()
 
 Nested transactions are supported too::

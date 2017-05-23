@@ -365,7 +365,7 @@ class Table(object):
             columns = [self.table.c[c] for c in columns]
             idx = Index(name, *columns, **kw)
             idx.create(self.database.engine)
-        except:
+        except Exception:
             idx = None
         finally:
             self.database._release()
