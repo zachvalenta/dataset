@@ -427,6 +427,15 @@ class TableTestCase(unittest.TestCase):
         l = list(m)  # exhaust iterator
         assert len(l) == 0
 
+    def test_bytes(self):
+        byte_place = 'byte_place'
+        # Byte value is illegal utf-8
+        byte_value = b'bytes\xe0'
+        self.tbl.insert({'byte_col': byte_value, 'place': byte_place})
+        result = list(self.tbl.find(place=byte_place))[0]
+        assert isinstance(result['byte_col'], bytes)
+        assert result['byte_col'] == byte_value
+
 
 class Constructor(dict):
     """ Very simple low-functionality extension to ``dict`` to
