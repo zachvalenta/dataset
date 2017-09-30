@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 
 import os
 import unittest
@@ -22,6 +22,7 @@ class DatabaseTestCase(unittest.TestCase):
     def setUp(self):
         os.environ.setdefault('DATABASE_URL', 'sqlite:///:memory:')
         self.db = connect(os.environ['DATABASE_URL'])
+        print(self.db.url)
         self.tbl = self.db['weather']
         self.tbl.insert_many(TEST_DATA)
 
