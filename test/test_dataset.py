@@ -3,11 +3,7 @@ from __future__ import unicode_literals
 import os
 import unittest
 from datetime import datetime
-
-try:
-    from collections import OrderedDict
-except ImportError:  # pragma: no cover
-    from ordereddict import OrderedDict  # Python < 2.7 drop-in
+from collections import OrderedDict
 
 from sqlalchemy import FLOAT, INTEGER, TEXT
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError, ArgumentError
