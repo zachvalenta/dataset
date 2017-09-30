@@ -13,11 +13,15 @@ from dataset import connect
 from .sample_data import TEST_DATA, TEST_CITY_1
 
 
+def get_db(**kwargs):
+    os.environ.setdefault('DATABASE_URL', 'sqlite:///:memory:')
+    return connect(os.environ['DATABASE_URL'], **kwargs)
+
+
 class DatabaseTestCase(unittest.TestCase):
 
     def setUp(self):
-        os.environ.setdefault('DATABASE_URL', 'sqlite:///:memory:')
-        self.db = connect(os.environ['DATABASE_URL'])
+        self.db = get_db()
         self.tbl = self.db['weather']
         self.tbl.insert_many(TEST_DATA)
 
@@ -150,7 +154,7 @@ class DatabaseTestCase(unittest.TestCase):
 class TableTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.db = connect('sqlite:///:memory:')
+        self.db = get_db()
         self.tbl = self.db['weather']
         for row in TEST_DATA:
             self.tbl.insert(row)
@@ -434,7 +438,7 @@ class Constructor(dict):
 class RowTypeTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.db = connect('sqlite:///:memory:', row_type=Constructor)
+        self.db = get_db(row_type=Constructor)
         self.tbl = self.db['weather']
         for row in TEST_DATA:
             self.tbl.insert(row)
